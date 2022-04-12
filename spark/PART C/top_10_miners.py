@@ -6,7 +6,7 @@ import time
 sc = pyspark.SparkContext()
 
 
-def validateTransaction(line):
+def validateBlocks(line):
     try:
         fields = line.split(',')
         if len(fields) != 9:
@@ -17,9 +17,9 @@ def validateTransaction(line):
         pass
 
 
-transacs = sc.textFile("/data/ethereum/blocks")
-validated_transacs = transacs.filter(validateTransaction)
-time_epoch = validated_transacs.map(lambda a: ((a.split(',')[2]), int(a.split(',')[4])))
+blocks = sc.textFile("/data/ethereum/blocks")
+validated_blocks = blocks.filter(validateBlocks)
+time_epoch = validated_blocks.map(lambda a: ((a.split(',')[2]), int(a.split(',')[4])))
 aggregateResult = time_epoch.reduceByKey(lambda x, y: x+y)
 top10Result = aggregateResult.takeOrdered(10, key=lambda x: -x[1])
 for record in top10Result:
