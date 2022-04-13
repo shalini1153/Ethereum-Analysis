@@ -28,4 +28,4 @@ rdd1 = date_month_year.aggregateByKey(aTuple, lambda a,b: (a[0] + b,    a[1] + 1
                                        lambda a,b: (a[0] + b[0], a[1] + b[1]))
 finalResult = rdd1.mapValues(lambda v: v[0]/v[1])
 
-finalResult.saveAsTextFile('part_b')
+finalResult.saveAsTextFile('part_a_2')

@@ -13,7 +13,7 @@ def validateTransaction(line):
         float(fields[3])
         return True
     except:
-        return False
+        pass
 
 def address_split(x):
     for i in range(len(x[0])):
